@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#f8f8f4" />
+    <title>Admin — PNG Student Care Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="admin.css" />
+    <script src="config.js"></script>
+    <script src="admin.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="PNG Student Care Hub home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 42 42" fill="none">
+            <path d="M21 4.5 36.5 13.4v15.2L21 37.5 5.5 28.6V13.4L21 4.5Z" fill="currentColor" />
+            <path d="M15.2 27.1V14.9h5.1c3 0 4.8 1.5 4.8 4s-1.8 4-4.8 4h-1.7v4.2h-3.4Zm3.4-7h1.6c1 0 1.6-.4 1.6-1.2s-.6-1.2-1.6-1.2h-1.6v2.4Z" fill="white" />
+          </svg>
+        </span>
+        <span class="brand-name">PNG Student<br />Care Hub</span>
+      </a>
+      <a class="text-link" href="index.html">← Back to website</a>
+    </header>
+
+    <main class="admin-main">
+      <section class="admin-panel">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Private workspace</span>
+        <h1>Hub <span>dashboard.</span></h1>
+        <p class="admin-intro">Manage community submissions, publish news and profiles, share media, and prepare messages for selected students.</p>
+
+        <form class="admin-login" id="admin-login">
+          <label for="admin-token">Administrator token</label>
+          <input id="admin-token" name="token" type="password" autocomplete="current-password" required />
+          <button class="button button-dark" type="submit">Open dashboard <span aria-hidden="true">↗</span></button>
+        </form>
+
+        <p class="form-feedback admin-feedback" id="admin-feedback" role="status" aria-live="polite"></p>
+
+        <section class="admin-results" id="admin-results" hidden>
+          <div class="results-heading">
+            <div>
+              <h2>Administrator workspace</h2>
+              <p id="results-count"></p>
+            </div>
+            <button class="button button-dark button-small" id="admin-logout" type="button">Lock workspace</button>
+          </div>
+          <nav class="admin-tabs" aria-label="Dashboard sections">
+            <a href="#admin-people">People</a>
+            <a href="#admin-messages">Student messages</a>
+            <a href="#admin-publish">Publish</a>
+            <a href="#admin-content">Published content</a>
+          </nav>
+
+          <section class="admin-section" id="admin-people">
+            <div class="section-heading">
+              <div><span class="eyebrow">Community directory</span><h2>People &amp; submissions</h2></div>
+              <p>Names are grouped by category, then alphabetically. Edit a name or category and save the row.</p>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th><th scope="col">Email</th><th scope="col">Category</th>
+                    <th scope="col">Received</th><th scope="col">Selected</th><th scope="col">Save</th>
+                  </tr>
+                </thead>
+                <tbody id="submission-list"></tbody>
+              </table>
+            </div>
+            <p class="privacy-note">Contact details are private. Only authorized administrators can see them.</p>
+          </section>
+
+          <section class="admin-section" id="admin-messages">
+            <div class="section-heading">
+              <div><span class="eyebrow">Benefit notifications</span><h2>Message selected students</h2></div>
+              <p>Select student submissions above, then prepare a private email draft.</p>
+            </div>
+            <label for="email-subject">Email subject</label>
+            <input id="email-subject" class="admin-field" maxlength="160" value="PNG Student Care Hub — Benefit selection update" />
+            <label for="email-message">Message</label>
+            <textarea id="email-message" class="admin-field" rows="5" maxlength="4000" placeholder="Write the benefit notification for selected students."></textarea>
+            <button class="button button-dark" id="draft-email" type="button">Create email draft</button>
+            <p class="privacy-note">This opens your email app with selected student addresses in BCC. It does not send automatically. Select only students authorized to receive this update.</p>
+          </section>
+
+          <section class="admin-section" id="admin-publish">
+            <div class="section-heading">
+              <div><span class="eyebrow">Admin-managed publishing</span><h2 id="editor-heading">Create a post or profile</h2></div>
+              <p>Articles, announcements and profiles can be published here. Record permission before publishing any profile or media.</p>
+            </div>
+            <form id="content-form" class="content-form">
+              <input id="content-id" type="hidden" />
+              <label for="content-kind">Content type</label>
+              <select id="content-kind" required>
+                <option value="article">Article / sponsor story</option>
+                <option value="announcement">Latest announcement</option>
+                <option value="profile">Community profile</option>
+                <option value="media">Photo or video</option>
+              </select>
+              <label for="content-title">Title or display name</label>
+              <input id="content-title" maxlength="160" required />
+              <label for="content-author">By / role or organization</label>
+              <input id="content-author" maxlength="120" placeholder="e.g. PNG Student Care Hub" />
+              <label for="content-role">Profile category (profiles only)</label>
+              <select id="content-role">
+                <option value="">Not applicable</option>
+                <option value="student">Student</option>
+                <option value="sponsor">Sponsor</option>
+                <option value="employer">Employer</option>
+                <option value="other">Administrator / community</option>
+              </select>
+              <label for="content-body">Story, description or update</label>
+              <textarea id="content-body" rows="5" maxlength="10000"></textarea>
+              <label for="media-url">HTTPS photo/video link</label>
+              <input id="media-url" type="text" maxlength="2048" placeholder="https://…" />
+              <label for="media-file">Or upload a photo/video file (maximum 25 MB)</label>
+              <input id="media-file" type="file" accept="image/*,video/*" />
+              <label for="media-kind">Media format</label>
+              <select id="media-kind">
+                <option value="">Not media</option>
+                <option value="image">Photo</option>
+                <option value="video">Video</option>
+              </select>
+              <label class="check-field"><input id="content-consent" type="checkbox" /> I have permission to publish this profile/photo/video.</label>
+              <label class="check-field"><input id="content-published" type="checkbox" /> Publish publicly (profiles and media require consent).</label>
+              <div class="form-actions">
+                <button class="button button-dark" type="submit">Save content</button>
+                <button class="button button-outline" id="cancel-edit" type="button" hidden>Cancel edit</button>
+              </div>
+            </form>
+            <p class="form-feedback admin-feedback" id="content-feedback" role="status" aria-live="polite"></p>
+          </section>
+
+          <section class="admin-section" id="admin-content">
+            <div class="section-heading">
+              <div><span class="eyebrow">Content library</span><h2>Manage posts and profiles</h2></div>
+              <p>Review, edit, publish, unpublish or remove content.</p>
+            </div>
+            <div id="content-list" class="content-list"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer footer-bottom admin-footer">
+      <span>PNG Student Care Hub</span>
+      <a href="index.html">Return to the public website</a>
+    </footer>
+  </body>
+</html>
